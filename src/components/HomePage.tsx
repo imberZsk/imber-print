@@ -1,18 +1,7 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import {
-  Box,
-  Sparkles,
-  Image as ImageIcon,
-  Type,
-  Settings,
-  Download,
-  Share2,
-  RotateCcw,
-  Eye,
-  EyeOff
-} from 'lucide-react'
+import { Sparkles, Image as ImageIcon, Type, Settings } from 'lucide-react'
 import { clsx } from 'clsx'
 
 import Scene3D from './Scene3D'
@@ -200,78 +189,6 @@ const GenerationOptions: React.FC = () => {
 }
 
 // 3D查看器控制面板
-const ViewerControls: React.FC<{
-  showGrid: boolean
-  setShowGrid: (show: boolean) => void
-  autoRotate: boolean
-  setAutoRotate: (rotate: boolean) => void
-  onReset: () => void
-  onDownload: () => void
-  onShare: () => void
-}> = ({
-  showGrid,
-  setShowGrid,
-  autoRotate,
-  setAutoRotate,
-  onReset,
-  onDownload,
-  onShare
-}) => {
-  return (
-    <div className="flex flex-wrap gap-2 p-4 bg-white rounded-lg border">
-      <button
-        onClick={() => setShowGrid(!showGrid)}
-        className={clsx(
-          'px-3 py-2 text-sm rounded-lg transition-colors flex items-center space-x-2',
-          showGrid
-            ? 'bg-blue-100 text-blue-700 border border-blue-200'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        )}
-      >
-        <Box className="w-4 h-4" />
-        <span>网格</span>
-      </button>
-
-      <button
-        onClick={() => setAutoRotate(!autoRotate)}
-        className={clsx(
-          'px-3 py-2 text-sm rounded-lg transition-colors flex items-center space-x-2',
-          autoRotate
-            ? 'bg-blue-100 text-blue-700 border border-blue-200'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        )}
-      >
-        <RotateCcw className="w-4 h-4" />
-        <span>自动旋转</span>
-      </button>
-
-      <button
-        onClick={onReset}
-        className="px-3 py-2 text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
-      >
-        重置视角
-      </button>
-
-      <div className="flex-1" />
-
-      <button
-        onClick={onDownload}
-        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center space-x-2"
-      >
-        <Download className="w-4 h-4" />
-        <span>下载</span>
-      </button>
-
-      <button
-        onClick={onShare}
-        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center space-x-2"
-      >
-        <Share2 className="w-4 h-4" />
-        <span>分享</span>
-      </button>
-    </div>
-  )
-}
 
 const HomePage: React.FC = () => {
   const {
@@ -286,8 +203,7 @@ const HomePage: React.FC = () => {
     useUIStore()
   const { currentTask, setCurrentTask } = useGenerationStore()
 
-  const [showGrid, setShowGrid] = useState(true)
-  const [autoRotate, setAutoRotate] = useState(false)
+  const [showGrid, _setShowGrid] = useState(true)
 
   // 处理文件上传
   const handleFileSelect = useCallback(

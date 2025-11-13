@@ -3,10 +3,10 @@ import { getImage } from '../../image-store'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = params.id
+    const { id } = await params
     console.log('获取图片请求:', id)
 
     const imageData = getImage(id)

@@ -177,7 +177,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 alt="预览"
                 className="w-full h-64 object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30" />
+              <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent opacity-30" />
             </div>
           )}
 
@@ -210,7 +210,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       {/* 错误提示 */}
       {!validation.isValid && validation.error && (
         <div className="mt-3 flex items-center space-x-2 text-red-600 bg-red-50 border border-red-200 rounded-lg p-3">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
+          <AlertCircle className="w-5 h-5 shrink-0" />
           <p className="text-sm">{validation.error}</p>
         </div>
       )}

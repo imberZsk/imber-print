@@ -6,11 +6,9 @@ import {
   CheckCircle,
   AlertCircle,
   Loader2,
-  Upload,
   Sparkles,
   RotateCcw,
-  Pause,
-  Play
+  Pause
 } from 'lucide-react'
 import { clsx } from 'clsx'
 
@@ -105,23 +103,6 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
         return <RotateCcw className="w-6 h-6 text-gray-500" />
       default:
         return <Clock className="w-6 h-6 text-gray-400" />
-    }
-  }
-
-  const getStatusColor = () => {
-    switch (progress.status) {
-      case 'uploading':
-      case 'processing':
-      case 'generating':
-        return 'blue'
-      case 'completed':
-        return 'green'
-      case 'error':
-        return 'red'
-      case 'cancelled':
-        return 'gray'
-      default:
-        return 'gray'
     }
   }
 
