@@ -792,7 +792,6 @@ const HomePage: React.FC = () => {
           step.status === 'COMPLETED'
             ? {
                 model_glb: {
-                  // url: 'https://file.302.ai/gpt/imgs/20251113/baebcdbccd6f04618ea495f442a8db67.glb',
                   url: 'https://file.302.ai/gpt/imgs/20251113/baebcdbccd6f04618ea495f442a8db67.glb',
                   content_type: 'application/octet-stream',
                   file_size: 1189132
