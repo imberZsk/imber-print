@@ -576,18 +576,19 @@ const HomePage: React.FC = () => {
           await new Promise((resolve) => setTimeout(resolve, pollInterval))
         } catch (error) {
           console.error('轮询任务状态失败:', error)
-          
+
           // 更新错误信息到UI，但不停止轮询
           setCurrentTask((prev: any) =>
             prev
               ? {
                   ...prev,
-                  error: error instanceof Error ? error.message : '查询任务状态失败',
+                  error:
+                    error instanceof Error ? error.message : '查询任务状态失败',
                   message: '查询状态时出错，正在重试...'
                 }
               : prev
           )
-          
+
           // 不要立即停止轮询，可能是临时网络错误
           // 连续失败3次才停止
           const consecutiveFailures = (error as any).consecutiveFailures || 0
@@ -875,12 +876,13 @@ const HomePage: React.FC = () => {
           step.status === 'COMPLETED'
             ? {
                 model_glb: {
+                  // url: 'https://file.302.ai/gpt/imgs/20251113/baebcdbccd6f04618ea495f442a8db67.glb',
                   url: 'https://file.302.ai/gpt/imgs/20251113/baebcdbccd6f04618ea495f442a8db67.glb',
                   content_type: 'application/octet-stream',
                   file_size: 1189132
                 },
                 model_glb_pbr: {
-                  url: 'https://file.302.ai/gpt/imgs/20251113/f40735a1ed1a223b37a90b0b0823d8db.glb',
+                  url: location.origin + '/tiger.glb',
                   content_type: 'application/octet-stream',
                   file_size: 4521104
                 },
