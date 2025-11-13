@@ -1,3 +1,7 @@
+# 文档
+
+混云生 3D 文档：https://cloud.tencent.com/document/product/1804/120757
+
 # 3D 模型生成 Web 应用
 
 一个基于 Next.js 和 React Three Fiber 的 3D 模型生成 Web 应用，支持从图像或文本描述生成交互式 3D 模型。

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import { Type, Sparkles, Lightbulb, AlertCircle } from 'lucide-react'
+import { Lightbulb, AlertCircle } from 'lucide-react'
 import { clsx } from 'clsx'
 
 interface TextInputProps {
@@ -15,13 +15,11 @@ interface TextInputProps {
 const TextInput: React.FC<TextInputProps> = ({
   onTextSubmit,
   maxLength = 500,
-  placeholder = '描述您想要生成的3D模型...',
+  placeholder = '请输入图片 URL 或 base64 data URL（例如：https://example.com/image.jpg 或 data:image/jpeg;base64,...）',
   examples = [
-    '一个未来风格的机器人，银色金属外壳，蓝色LED眼睛',
-    '可爱的小猫咪，橘色毛发，绿色眼睛，坐在垫子上',
-    '中世纪城堡，石头建筑，高耸的塔楼，护城河环绕',
-    '现代跑车，流线型设计，红色车身，黑色轮胎',
-    '古老的橡树，粗壮的树干，茂密的树冠，阳光透过树叶'
+    'https://example.com/image1.jpg',
+    'https://example.com/image2.png',
+    'https://example.com/image3.webp'
   ],
   className = ''
 }) => {
@@ -69,11 +67,11 @@ const TextInput: React.FC<TextInputProps> = ({
             className={clsx(
               'w-full min-h-[120px] p-4 border-2 rounded-lg resize-none transition-all duration-200',
               'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+              'text-gray-900 placeholder:text-gray-400',
               {
-                'border-gray-300': !isFocused && !isOverLimit,
-                'border-blue-400': isFocused && !isOverLimit,
-                'border-red-400': isOverLimit,
-                'bg-red-50': isOverLimit
+                'border-gray-300 bg-white': !isFocused && !isOverLimit,
+                'border-blue-400 bg-white': isFocused && !isOverLimit,
+                'border-red-400 bg-red-50': isOverLimit
               }
             )}
           />
@@ -90,9 +88,9 @@ const TextInput: React.FC<TextInputProps> = ({
           </div>
 
           {/* 图标 */}
-          <div className="absolute top-3 left-3">
+          {/* <div className="absolute top-3 left-3">
             <Type className="w-5 h-5 text-gray-400" />
-          </div>
+          </div> */}
         </div>
 
         {/* 超出限制警告 */}
@@ -113,14 +111,9 @@ const TextInput: React.FC<TextInputProps> = ({
           >
             <Lightbulb className="w-4 h-4" />
             <span className="text-sm font-medium">
-              {showExamples ? '隐藏' : '显示'}示例提示词
+              {showExamples ? '隐藏' : '显示'}示例 URL
             </span>
           </button>
-
-          <div className="flex items-center space-x-1 text-xs text-gray-500">
-            <Sparkles className="w-3 h-3" />
-            <span>Ctrl+Enter 快速提交</span>
-          </div>
         </div>
 
         {showExamples && (
@@ -140,36 +133,15 @@ const TextInput: React.FC<TextInputProps> = ({
         )}
       </div>
 
-      {/* 提交按钮 */}
-      <div className="flex justify-end">
-        <button
-          onClick={handleSubmit}
-          disabled={!text.trim() || isOverLimit}
-          className={clsx(
-            'px-6 py-2 rounded-lg font-medium transition-all duration-200',
-            'flex items-center space-x-2',
-            {
-              'bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg':
-                text.trim() && !isOverLimit,
-              'bg-gray-300 text-gray-500 cursor-not-allowed':
-                !text.trim() || isOverLimit,
-              'hover:scale-105': text.trim() && !isOverLimit
-            }
-          )}
-        >
-          <Sparkles className="w-4 h-4" />
-          <span>生成3D模型</span>
-        </button>
-      </div>
-
       {/* 输入提示 */}
-      <div className="text-xs text-gray-500 space-y-1">
-        <p>💡 提示：详细描述可以获得更好的生成效果</p>
-        <div className="flex flex-wrap gap-4">
-          <span>✓ 包含材质描述（金属、木质、玻璃等）</span>
-          <span>✓ 说明颜色和纹理</span>
-          <span>✓ 描述形状和大小</span>
-          <span>✓ 添加风格关键词（现代、古典、科幻等）</span>
+      <div className="text-xs text-gray-600 space-y-1">
+        <p className="font-medium">
+          💡 提示：请输入图片 URL 或 base64 data URL
+        </p>
+        <div className="flex flex-wrap gap-4 text-gray-500">
+          <span>✓ 支持 http:// 和 https:// URL</span>
+          <span>✓ 支持 base64 data URL（data:image/...）</span>
+          <span>✓ 推荐使用 JPG、PNG 格式</span>
         </div>
       </div>
     </div>

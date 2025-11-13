@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import {
   Clock,
   CheckCircle,
@@ -48,7 +48,21 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   className = ''
 }) => {
   const [elapsedTime, setElapsedTime] = useState(0)
-  const startTime = Date.now()
+  const startTimeRef = useRef<number>(Date.now())
+
+  useEffect(() => {
+    // 当任务状态变为进行中时，重置开始时间
+    if (
+      progress.status === 'uploading' ||
+      progress.status === 'processing' ||
+      progress.status === 'generating'
+    ) {
+      // 如果任务ID变化，说明是新任务，重置开始时间
+      if (progress.taskId) {
+        startTimeRef.current = Date.now()
+      }
+    }
+  }, [progress.taskId])
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -59,14 +73,17 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
       progress.status === 'generating'
     ) {
       interval = setInterval(() => {
-        setElapsedTime(Math.floor((Date.now() - startTime) / 1000))
+        setElapsedTime(Math.floor((Date.now() - startTimeRef.current) / 1000))
       }, 1000)
+    } else {
+      // 任务完成或失败时，停止计时
+      setElapsedTime(0)
     }
 
     return () => {
       if (interval) clearInterval(interval)
     }
-  }, [progress.status, startTime])
+  }, [progress.status])
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60)
